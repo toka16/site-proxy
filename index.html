@@ -4,8 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Proxy</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+        #frame {
+            width: 100vw; 
+            height: 100vh;
+            border: 0px;
+        }
+        .navigator {
+            margin: 3px 5px;
+            padding: 2px 3px;
+        }
+        #navigate-form {
+            display: inline;
+            margin-left: 20px;
+        }
+        #url-input {
+            min-width: 50%;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', () => {
+            const frame = document.getElementById("frame");
+            document.getElementById("navigate-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                console.log("navigate to ", document.getElementById("url-input").value);
+                frame.src = document.getElementById("url-input").value;
+            })
+            for (let btn of document.getElementsByClassName("navigator")) {
+                console.log("add event listener");
+                btn.addEventListener("click", (e) => {
+                    console.log("navigate to ", e.target.dataset["href"])
+                    frame.src = e.target.dataset["href"]
+                })
+            }
+        })
+    </script>
 </head>
 <body>
-    <iframe src="https://mykadri.tv" style="width: 100vw; height: 100vh;" allow="fullscreen" />
+    <button class="navigator" data-href="https://mykadri.tv">My Kadri</button>
+    <button class="navigator" data-href="https://ge.movie">Ge Movie</button>
+    <button class="navigator" data-href="https://adjaranets.to">Adjaranets To</button>
+    <form id="navigate-form">
+        URL: <input type="url" id="url-input">
+        <input type="submit" value="Go">
+    </form>
+    <iframe id="frame" src="https://mykadri.tv" allow="fullscreen" />
 </body>
 </html>
